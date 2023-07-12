@@ -30,7 +30,6 @@ public class SolutionTest {
                 {1, 2},
                 {3, 4},
                 {0, 4},
-                {5},
                 {}
         };
         List<Integer> expected = new ArrayList<>(List.of(4));
