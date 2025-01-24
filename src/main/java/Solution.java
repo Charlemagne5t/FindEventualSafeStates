@@ -1,35 +1,41 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Solution {
+class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
+        int  n = graph.length;
+        List<Integer> res = new ArrayList<>();
 
-        List<Integer> result = new ArrayList<>();
-        int[] visited = new int[graph.length];
-        for (int i = 0; i < graph.length; i++) {
-            dfs(graph, i, result, visited);
-        }
-        Collections.sort(result);
-        return result;
-    }
-
-    private boolean dfs(int[][] graph, int node, List<Integer> result, int[] visited) {
-        if (visited[node] == 2) {
-            return true;
-        }
-        if (visited[node] == 1) {
-            return false;
-        }
-
-        visited[node] = 1;
-
-        for (int i = 0; i < graph[node].length; i++) {
-            if (!dfs(graph, graph[node][i], result, visited)) {
-                return false;
+        int[] vis = new int[n];
+        for(int i = 0; i < n; i++) {
+            if(graph[i].length == 0) {
+                vis[i] = 2;
             }
         }
 
-        visited[node] = 2;
-        result.add(node);
+        for(int i = 0; i < n; i++) {
+            if(dfs(i, graph, vis)){
+                res.add(i);
+            }
+        }
+        return res;
+    }
+
+    boolean dfs(int i, int[][] graph, int[] vis) {
+        if(vis[i] == 2) {
+            return true;
+        }
+        if(vis[i] == 1) {
+            return false;
+        }
+        vis[i] = 1;
+
+        for(int j = 0; j < graph[i].length; j++) {
+            if(!dfs(graph[i][j], graph, vis)) {
+                return false;
+            }
+        }
+        vis[i] = 2;
         return true;
     }
 }
